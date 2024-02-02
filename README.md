@@ -1,3 +1,3 @@
 # DAGV345_Lab
 
-Attached is a maya file _Turtle Rig Skinned to show skinning and weight painting skills
+Attached is a maya file Apollo_Rigged_new to showcase rig for lab
