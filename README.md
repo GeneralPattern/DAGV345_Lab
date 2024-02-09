@@ -1,3 +1,7 @@
 # DAGV345_Lab
 
-Attached is a maya file Apollo_Rigged_new to showcase rig for lab
+Added four scripts I use for rigging,
+Colorswap
+JointPlacer
+Nurb color Changer
+SequentialRenamer
