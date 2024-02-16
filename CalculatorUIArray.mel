@@ -1,0 +1,167 @@
+global proc string Sum(float $firstNum, float $secondNum)
+{
+    $result = $firstNum + $secondNum;
+    return ($firstNum + " + " + $secondNum + " = " + $result);
+}
+
+global proc string Difference(float $firstNum, float $secondNum)
+{
+    $result = $firstNum - $secondNum;
+    return ($firstNum + " - " + $secondNum + " = " + $result);
+}
+
+global proc string Multiply(float $firstNum, float $secondNum)
+{
+    $result = $firstNum * $secondNum;
+    return ($firstNum + " * " + $secondNum + " = " + $result);
+}
+
+global proc string Divide(float $firstNum, float $secondNum)
+{
+    $result = $firstNum / $secondNum;
+    return ($firstNum + " / " + $secondNum + " = " + $result);
+
+}
+
+
+global proc string Power(float $firstNum, float $secondNum)
+{
+    $result = pow ($firstNum, $secondNum);
+    return ($firstNum + " To the power of " + $secondNum + " = " + $result);
+}
+
+global proc float Mean(float $nums[])
+{
+    float $mean;
+    float $result = 0;
+    float $size = size($nums);
+    for($i = 0; $i < $size; $i++)
+    {
+
+        float $tempNum = $nums[$i];
+        $result = $result + $tempNum;
+        
+    }
+    $mean = ($result / $size);
+    return $mean;
+}
+
+
+global proc float Median(float $nums[])
+{
+    int $size = size($nums);
+    $nums = `sort $nums`;
+
+    if ($size % 2 == 0)
+    {
+
+        int $upperMiddle= $size / 2;
+        int $lowerMiddle = $upperMiddle - 1;
+        float $middleAverage = ($nums[$lowerMiddle] + $nums[$upperMiddle]) / 2;
+        return $middleAverage;
+        
+    }
+    else
+    {
+        int $halfway = ($size / 2);
+        return $nums[$halfway];
+    }
+}
+
+
+global proc string Calculator(int $operation, float $nums[], int $firstNum, int $secondNum)
+{
+    if ($operation == 1)
+        {
+        return(Sum($firstNum, $secondNum));
+        }
+
+    else if ($operation == 2)
+        {
+        return(Difference($firstNum, $secondNum));
+        }
+    
+    else if ($operation == 3)
+        {
+        return(Multiply($firstNum, $secondNum));
+        }
+
+    else if ($operation == 5)
+        {
+        return(Divide($firstNum, $secondNum));
+        }
+
+    else if ($operation == 4)
+        {
+        return(Power($firstNum, $secondNum));
+        }
+
+    else if ($operation == 6)
+        {
+        return("The Mean of: " + floatArrayToString($nums, ", " + " is " + Mean($nums)));
+        
+        }
+
+    else if ($operation == 7)
+        {
+        print("The Median of: ");
+        print(floatArrayToString($nums, ", "));
+        print(" is " + Median($nums));
+        }
+}
+
+// Operation 1 = Additon
+// Operation 2 = Difference
+// Operation 3 = Multiply
+// Operation 4 = Division
+// Operation 5 = To the Power of
+// Operation 6 = Mean
+// Operation 7 = Median
+
+//Calculator(7,{2,3,5,1,3,6}, 0, 0);
+
+
+global proc CalcButtonCmd()
+{
+    //Trying to recieve an array of floats within one textfield inside the UI
+    string $NumField = `optionVar -q "CalcNumField"`;
+    string $operField = `optionVar -q "CalcOperation"`;
+    string $resultField = `optionVar -q "CalcResults"`;
+
+    string $firstNumber = `textField -q -text $NumField`;
+    string $oper = `radioButtonGrp -q -select $operField`;
+
+    $NumberArray = stringToStringArray($firstNumber, " " );
+    int $arraySize = size($NumberArray);
+    for($i = 0; $i < $arraySize; $i++)
+    {
+        ($NumberArray[$i]);
+    }
+        
+
+    //How can you convert string array to a float array
+    //string $resultFunction = Calculator($oper, {1,1,1,1}, $firstNumber, $secondNumber);
+    //textField -e -text $resultFunction  $resultField;
+
+}
+
+global proc CalculatorUI()
+{
+    string $mWindow = "CalcWindow";
+
+    if (`window -exists $mWindow`)
+        deleteUI $mWindow;
+
+    $mWindow  = `window -title "Calculator" -widthHeight 600 400 -resizeToFitChildren 1 $mWindow`;
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+    optionVar -stringValue "CalcNumField" `textField`;
+    optionVar -stringValue "CalcOperation" `radioButtonGrp -numberOfRadioButtons 4 -labelArray4 "Addition" "Difference" "Multiply" "Power"`;
+    //I am trying to connect two RadioButtonGroups but it is not working
+    //radioButtonGrp -numberOfRadioButtons 3 -shareCollection $operField -labelArray3 "Division" "Mean" "Meadian";
+    button -parent $mColumn -label "Calculate" -command "CalcButtonCmd";
+    optionVar -stringValue "CalcResults" `textField -parent $mColumn -editable 0`;
+
+    showWindow $mWindow;
+}
+
+CalculatorUI();

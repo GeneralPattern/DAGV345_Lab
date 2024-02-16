@@ -1,0 +1,155 @@
+global proc int Sum(float $nums[])
+{
+    float $result = 0;
+    float $size = size($nums);
+    for($i = 0; $i < $size; $i++)
+    {
+        float $tempNum = $nums[$i];
+        $result = $result + $tempNum;
+    }
+    return $result;
+}
+
+global proc int Difference(float $nums[])
+{
+    int $result = $nums[0];
+    int $size = size($nums);
+    for($i = 1; $i < $size; $i++)
+    {
+        $result = ($result - $nums[$i]); 
+    }
+    return $result;
+}
+
+
+
+
+global proc float Multiply(float $nums[])
+{
+    float $result = 1;
+    float $size = size($nums);
+    for($i = 0; $i < $size; $i++)
+    {
+
+        float $tempNum = $nums[$i];
+        $result = $result * $tempNum;
+    }
+    return $result;
+}
+
+
+global proc float Divide(float $nums[])
+{
+    float $result = $nums[0];
+    float $size = size($nums);
+    for($i = 1; $i < $size; $i++)
+    {
+        float $tempNum = $nums[$i];
+        $result = ($result / $tempNum);
+    
+    }
+    return $result;
+
+}
+
+
+global proc Power(float $firstNum, float $secondNum)
+{
+    $result = pow ($firstNum, $secondNum);
+    print ($firstNum + " To the power of " + $secondNum + " = " + $result);
+}
+
+global proc float Mean(float $nums[])
+{
+    float $mean;
+    float $result = 0;
+    float $size = size($nums);
+    for($i = 0; $i < $size; $i++)
+    {
+
+        float $tempNum = $nums[$i];
+        $result = $result + $tempNum;
+        
+    }
+    $mean = ($result / $size);
+    return $mean;
+}
+
+
+global proc float Median(float $nums[])
+{
+    int $size = size($nums);
+    $nums = `sort $nums`;
+
+    if ($size % 2 == 0)
+    {
+
+        int $upperMiddle= $size / 2;
+        int $lowerMiddle = $upperMiddle - 1;
+        float $middleAverage = ($nums[$lowerMiddle] + $nums[$upperMiddle]) / 2;
+        return $middleAverage;
+        
+    }
+    else
+    {
+        int $halfway = ($size / 2);
+        return $nums[$halfway];
+    }
+}
+
+
+global proc Calculator(int $operation, float $nums[], int $firstNum, int $secondNum)
+{
+    if ($operation == 1)
+        {
+        print(floatArrayToString($nums, " + "));
+        print(" = " + Sum($nums)); 
+        }
+
+    else if ($operation == 2)
+        {
+        print(floatArrayToString($nums, " - "));
+        print(" = " + Difference($nums));
+        }
+    
+    else if ($operation == 3)
+        {
+        print(floatArrayToString($nums, " x "));
+        print(" = " + Multiply($nums));
+        }
+
+    else if ($operation == 4)
+        {
+        print(floatArrayToString($nums, " / "));
+        print(" = " + Divide($nums));
+        }
+
+    else if ($operation == 5)
+        {
+        Power($firstNum, $secondNum);
+        }
+
+    else if ($operation == 6)
+        {
+        print("The Mean of: ");
+        print(floatArrayToString($nums, ", "));
+        print(" is " + Mean($nums));
+        }
+
+    else if ($operation == 7)
+        {
+        print("The Median of: ");
+        print(floatArrayToString($nums, ", "));
+        print(" is " + Median($nums));
+        }
+}
+
+// Operation 1 = Additon
+// Operation 2 = Difference
+// Operation 3 = Multiply
+// Operation 4 = Division
+// Operation 5 = To the Power of
+// Operation 6 = Mean
+// Operation 7 = Median
+
+Calculator(7,{2,3,5,1,3,6}, 0, 0);
