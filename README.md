@@ -1,7 +1,3 @@
 # DAGV345_Lab
 
-Added four scripts I use for rigging,
-Colorswap
-JointPlacer
-Nurb color Changer
-SequentialRenamer
+Added a calculator script with a UI array, to show competency with coding UI into maya.
